@@ -53,8 +53,10 @@ class BflReduxLoraPredictor(BflBf16Predictor):
 class DevReduxLoraPredictor(Predictor):
     def setup(self):
         self.base_setup()
+        cache = WeightsDownloadCache()
         self.model = BflReduxLoraPredictor(FLUX_DEV, 
                                        restore_lora_from_cloned_weights=True,
+                                       weights_download_cache=cache,
                                        offload=self.should_offload())
         
 
