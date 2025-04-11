@@ -62,6 +62,7 @@ class DevReduxLoraPredictor(Predictor):
 
     def predict(
         self,
+        prompt: str = Inputs.prompt,
         redux_image: Path = Input(
             description="Input image to condition your output on. This replaces prompt for FLUX.1 Redux models",
         ),
@@ -84,7 +85,6 @@ class DevReduxLoraPredictor(Predictor):
         lora_weights: str = Inputs.lora_weights,
         lora_scale: float = Inputs.lora_scale,
     ) -> List[Path]:
-        prompt = ""
         self.model.handle_loras(lora_weights, lora_scale)
 
         width, height = self.size_from_aspect_megapixels(aspect_ratio, megapixels)
