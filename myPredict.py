@@ -2,9 +2,9 @@ from pathlib import Path
 from typing import List
 
 from cog import BasePredictor, Input, Path 
-from .predict import Predictor, Inputs
-from .bfl_predictor import BflReduxPredictor
-from .predict import FLUX_DEV
+from predict import Predictor, Inputs
+from bfl_predictor import BflReduxPredictor
+from predict import FLUX_DEV
 
 class DevReduxLoraPredictor(Predictor):
     def setup(self):
