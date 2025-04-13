@@ -29,8 +29,7 @@ build:
   # commands run after the environment is setup
   run:
     - curl -o /usr/local/bin/pget -L "https://github.com/replicate/pget/releases/download/v0.8.2/pget_linux_x86_64" && chmod +x /usr/local/bin/pget
-    - mkdir -p /src/weights-cache/d2d9f80f7f3eb3ae/
-    - pget https://huggingface.co/zhangsongbo365/Ghibli_lora/resolve/main/Ghibli.safetensors /src/weights-cache/d2d9f80f7f3eb3ae/
+    - pget https://huggingface.co/zhangsongbo365/Ghibli_lora/resolve/main/Ghibli.safetensors /src/weights-cache/d2d9f80f7f3eb3ae
 
 predict: "myPredict.py:DevReduxLoraPredictor"
 
