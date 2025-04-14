@@ -498,9 +498,9 @@ def apply_lora_weight_to_module(
     fused_weight = (w_orig.float() + fused_lora).to(torch.bfloat16)
     return fused_weight  
 
-def convert_lora_weights(lora_path: str | Path, has_guidance: bool):
+def convert_lora_weights(lora_path: str | Path, has_guidance: bool, device: str = "cuda"):
     logger.info(f"Loading LoRA weights for {lora_path}")
-    lora_weights = load_file(lora_path, device="cuda")
+    lora_weights = load_file(lora_path, device=device)
     is_kohya = any(".lora_down.weight" in k for k in lora_weights)
 
     # converting to diffusers to convert from diffusers is a bit circuitous at the moment but it works 
@@ -527,13 +527,13 @@ def convert_lora_weights(lora_path: str | Path, has_guidance: bool):
 
 
 @torch.inference_mode()
-def load_loras(model: Flux, lora_paths: list[str] | list[Path], lora_scales: list[float], store_clones: bool = False):
+def load_loras(model: Flux, lora_paths: list[str] | list[Path], lora_scales: list[float], store_clones: bool = False, device: str = "cuda"):
     for lora, scale in zip(lora_paths, lora_scales):
-        load_lora(model, lora, scale, store_clones) 
+        load_lora(model, lora, scale, store_clones, device) 
 
 
 @torch.inference_mode()
-def load_lora(model: Flux, lora_path: str | Path, lora_scale: float = 1.0, store_clones: bool = False):
+def load_lora(model: Flux, lora_path: str | Path, lora_scale: float = 1.0, store_clones: bool = False, device: str = "cuda"):
     """
     Loads lora weights. 
     
@@ -542,7 +542,7 @@ def load_lora(model: Flux, lora_path: str | Path, lora_scale: float = 1.0, store
     t = time.time()
     has_guidance = model.params.guidance_embed
 
-    lora_weights = convert_lora_weights(lora_path, has_guidance)
+    lora_weights = convert_lora_weights(lora_path, has_guidance, device)
 
     apply_lora_to_model_and_optionally_store_clones(model, lora_weights, lora_scale, store_clones)
 

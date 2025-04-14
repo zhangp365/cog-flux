@@ -66,6 +66,7 @@ class LoraMixin:
         lora_scale: float = 1.0,
         extra_lora_weights: str | None = None,
         extra_lora_scale: float = 1.0,
+        device: str = "cuda",
     ):
         loading = "loading"
         if not lora_weights and extra_lora_weights:
@@ -103,9 +104,10 @@ class LoraMixin:
                         [lora_path, extra_lora_path],
                         [lora_scale, extra_lora_scale],
                         self.store_clones,
+                        device,
                     )
                 else:
-                    load_lora(model, lora_path, lora_scale, self.store_clones)
+                    load_lora(model, lora_path, lora_scale, self.store_clones, device)
             else:
                 print(f"Lora {lora_weights} already loaded")
                 if extra_lora_weights:

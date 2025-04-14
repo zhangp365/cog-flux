@@ -85,7 +85,7 @@ class DevReduxLoraPredictor(Predictor):
         lora_weights: str = Inputs.lora_weights,
         lora_scale: float = Inputs.lora_scale,
     ) -> List[Path]:
-        self.model.handle_loras(lora_weights, lora_scale)
+        self.model.handle_loras(lora_weights, lora_scale, self.model.device)
 
         width, height = self.size_from_aspect_megapixels(aspect_ratio, megapixels)
         imgs, np_imgs = self.model.predict(
