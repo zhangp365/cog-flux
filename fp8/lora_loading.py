@@ -522,7 +522,6 @@ def convert_lora_weights(lora_path: str | Path, has_guidance: bool):
         lora_weights = convert_from_original_flux_checkpoint(lora_weights)
     logger.info(f"LoRA weights loaded.")
     for k, v in lora_weights.items():
-        logger.info(f"{k}: {v.device}")
         lora_weights[k] = v.to(device="cuda")
     return lora_weights
 
