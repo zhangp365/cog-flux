@@ -520,7 +520,8 @@ def convert_lora_weights(lora_path: str | Path, has_guidance: bool):
         )
     else:
         lora_weights = convert_from_original_flux_checkpoint(lora_weights)
-    logger.info("LoRA weights loaded")
+    logger.info(f"LoRA weights loaded, to device:{lora_weights.device}")
+    lora_weights = lora_weights.to(device="cuda")
     return lora_weights
 
 
