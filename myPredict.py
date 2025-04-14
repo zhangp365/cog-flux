@@ -86,7 +86,7 @@ class DevReduxLoraPredictor(Predictor):
         lora_scale: float = Inputs.lora_scale,
     ) -> List[Path]:
         device = next(self.model.model.parameters()).device
-        device = "cuda" if "cuda" in device else "cpu"
+        device = "cuda" if "cuda" in str(device) else "cpu"
         print(f"flux Device: {device}")
         self.model.handle_loras(lora_weights, lora_scale, device=device)
 
